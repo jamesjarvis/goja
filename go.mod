@@ -7,7 +7,6 @@ require (
 	github.com/dop251/goja v0.0.0-20220214123719-b09a6bfa842f
 	github.com/dop251/goja_nodejs v0.0.0-20210225215109-d91c329300e7
 	github.com/go-sourcemap/sourcemap v2.1.3+incompatible
-	github.com/jinzhu/copier v0.3.5
 	golang.org/x/text v0.3.6
 	gopkg.in/yaml.v2 v2.4.0
 )

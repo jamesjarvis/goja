@@ -21,7 +21,6 @@ import (
 	js_ast "github.com/jamesjarvis/goja/ast"
 	"github.com/jamesjarvis/goja/parser"
 	"github.com/jamesjarvis/goja/unistring"
-	"github.com/jinzhu/copier"
 )
 
 const (
@@ -399,10 +398,7 @@ func (r *Runtime) createIterProto(val *Object) objectImpl {
 func (r *Runtime) ResetFrom(base *Runtime) {
 	r.global = base.global
 
-	err := copier.Copy(r.globalObject, base.globalObject)
-	if err != nil {
-		panic(err)
-	}
+	r.globalObject = r.NewObject()
 
 	r.vm.stash = &r.global.stash
 }

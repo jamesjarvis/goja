@@ -949,14 +949,16 @@ func TestRuntime_ExportToCallable(t *testing.T) {
 
 func TestRuntime_Resets(t *testing.T) {
 	const SCRIPT = `
+	let hello = "world";
 	function f(param) {
+		let thing = "hi";
 		return +param + 2;
 	}
 	`
 	base := New()
 	vm := New()
 
-	prg := MustCompile("test.js", SCRIPT, false)
+	prg := MustCompile("test.js", SCRIPT, true)
 
 	res, err := vm.RunProgram(prg)
 	if err != nil {
