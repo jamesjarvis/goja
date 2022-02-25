@@ -1,13 +1,14 @@
 package goja
 
 import (
-	"github.com/dop251/goja/unistring"
 	"math"
 	"strings"
 	"unicode/utf16"
 	"unicode/utf8"
 
-	"github.com/dop251/goja/parser"
+	"github.com/jamesjarvis/goja/unistring"
+
+	"github.com/jamesjarvis/goja/parser"
 	"golang.org/x/text/collate"
 	"golang.org/x/text/language"
 	"golang.org/x/text/unicode/norm"

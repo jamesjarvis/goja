@@ -1,6 +1,6 @@
 package goja
 
-import "github.com/dop251/goja/unistring"
+import "github.com/jamesjarvis/goja/unistring"
 
 var (
 	SymHasInstance        = newSymbol(asciiString("Symbol.hasInstance"))

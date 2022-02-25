@@ -2,13 +2,14 @@ package goja
 
 import (
 	"errors"
-	"github.com/dop251/goja/unistring"
 	"io"
 	"math"
 	"regexp"
 	"strconv"
 	"strings"
 	"unicode/utf8"
+
+	"github.com/jamesjarvis/goja/unistring"
 )
 
 const hexUpper = "0123456789ABCDEF"
