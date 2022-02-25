@@ -947,6 +947,64 @@ func TestRuntime_ExportToCallable(t *testing.T) {
 	}
 }
 
+func TestRuntime_Resets(t *testing.T) {
+	const SCRIPT = `
+	function f(param) {
+		return +param + 2;
+	}
+	`
+	base := New()
+	vm := New()
+
+	prg := MustCompile("test.js", SCRIPT, false)
+
+	res, err := vm.RunProgram(prg)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	var c Callable
+	err = vm.ExportTo(vm.Get("f"), &c)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	res, err = c(Undefined(), vm.ToValue("40"))
+	if err != nil {
+		t.Fatal(err)
+	} else if !res.StrictEquals(vm.ToValue(42)) {
+		t.Fatalf("Unexpected value: %v", res)
+	}
+
+	// Check global state size
+	// reset
+	// assert global state size
+	// try again
+	beforeSize := len(vm.GlobalObject().Keys())
+	vm.ResetFrom(base)
+	afterSize := len(vm.GlobalObject().Keys())
+	if beforeSize == afterSize {
+		t.Fatalf("same size: %d and %d", beforeSize, afterSize)
+	}
+
+	_, err = vm.RunProgram(prg)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = vm.ExportTo(vm.Get("f"), &c)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	res, err = c(Undefined(), vm.ToValue("40"))
+	if err != nil {
+		t.Fatal(err)
+	} else if !res.StrictEquals(vm.ToValue(42)) {
+		t.Fatalf("Unexpected value: %v", res)
+	}
+}
+
 func TestRuntime_ExportToObject(t *testing.T) {
 	const SCRIPT = `
 	var o = {"test": 42};

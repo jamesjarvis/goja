@@ -397,8 +397,13 @@ func (r *Runtime) createIterProto(val *Object) objectImpl {
 }
 
 func (r *Runtime) ResetFrom(base *Runtime) {
-	copier.Copy(r.global, base.global)
-	copier.Copy(r.globalObject, base.globalObject)
+	r.global = base.global
+
+	err := copier.Copy(r.globalObject, base.globalObject)
+	if err != nil {
+		panic(err)
+	}
+
 	r.vm.stash = &r.global.stash
 }
 
