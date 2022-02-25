@@ -21,6 +21,7 @@ import (
 	js_ast "github.com/jamesjarvis/goja/ast"
 	"github.com/jamesjarvis/goja/parser"
 	"github.com/jamesjarvis/goja/unistring"
+	"github.com/jinzhu/copier"
 )
 
 const (
@@ -393,6 +394,12 @@ func (r *Runtime) createIterProto(val *Object) objectImpl {
 
 	o._putSym(SymIterator, valueProp(r.newNativeFunc(r.returnThis, nil, "[Symbol.iterator]", nil, 0), true, false, true))
 	return o
+}
+
+func (r *Runtime) ResetFrom(base *Runtime) {
+	copier.Copy(r.global, base.global)
+	copier.Copy(r.globalObject, base.globalObject)
+	r.vm.stash = &r.global.stash
 }
 
 func (r *Runtime) init() {

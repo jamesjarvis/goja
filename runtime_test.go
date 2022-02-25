@@ -2442,6 +2442,21 @@ func BenchmarkMainLoop(b *testing.B) {
 	}
 }
 
+func BenchmarkNewRuntime(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		New()
+	}
+}
+
+func BenchmarkResetRuntime(b *testing.B) {
+	base := New()
+	vm := New()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		vm.ResetFrom(base)
+	}
+}
+
 func BenchmarkStringMapGet(b *testing.B) {
 	m := make(map[string]Value)
 	for i := 0; i < 100; i++ {
